@@ -62,5 +62,4 @@ libshout must be installed.
 Restrictions
 -----
 
-As cross compilation does't work for GO projects with C bindings I can only provide the linux 64 bit binary.
-
+As cross compilation does't work for GO projects with C bindings I can only provide the linux 64 bit binary for now.
