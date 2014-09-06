@@ -25,22 +25,34 @@ The optional third argument `metadata` is a file containing the metadata sent to
 Stream a local mp3:
 
 ```
-cat Atmosphere/WhenLiveGivesYouLemons/02-Puppets.mp3 | ./laut-live yourstation xxxx-xxxx-xxxx-xxxx
+cat Atmosphere/WhenLiveGivesYouLemons/02-Puppets.mp3 | ./lautfm-streamer yourstation xxxx-xxxx-xxxx-xxxx
 ```
 
 You can easily use lame to transcode a file on the fly:
 
 ```
-lame ~/Downloads/Atmosphere/WhenLiveGivesYouLemons/02-Puppets.mp3 - | ./laut-live yourstation xxxx-xxxx-xxxx-xxxx
+lame ~/Downloads/Atmosphere/WhenLiveGivesYouLemons/02-Puppets.mp3 - | ./lautfm-streamer yourstation xxxx-xxxx-xxxx-xxxx
 ```
 
 As lame defaults to 128kbit/44.1khz this works without further parameters. Transcode a stream on the fly:
 
 ```
-curl -L http://stream.laut.fm/eins | lame - - | ./laut-live yourstation xxxx-xxxx-xxxx-xxxx
+curl -L http://stream.laut.fm/eins | lame - - | ./lautfm-streamer yourstation xxxx-xxxx-xxxx-xxxx
 ```
 
 You can add auth parameters to curl to stream password protected streams. Or add the `--max-time` option to automatically stop after a given number of seconds.
+
+You can use a song recognition system like gracenote to add metadata automatically:
+
+```
+mkfifo pipe
+curl http://stream1.laut.fm/eins | tee pipe | ./lautfm-streamer yourstation xxxx-xxxx-xxxx-xxxx metadata
+```
+… and in a separate process (using https://github.com/fabian1811/cmdline-musicdetection):
+```
+cat pipe | ./gn_stream_id client_id client_id_tag license_file metadata
+```
+Not the gracenote stream identifier will query the gracenote database to recognize the current song and update the metadata file with the appropriate metadata string. lautfm-streamer will catch the changes of the metadata file.
 
 Requirements
 ------------
