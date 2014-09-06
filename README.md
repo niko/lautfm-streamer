@@ -9,7 +9,7 @@ Synopsis
 Download the Linux binary:
 
 ```
-curl "https://raw.githubusercontent.com/niko/lautfm-streamer/master/lautfm-streamer.linux.64 > lautfm-streamer
+curl https://raw.githubusercontent.com/niko/lautfm-streamer/master/lautfm-streamer.linux.64 > lautfm-streamer
 chmod 755 lautfm-streamer
 ```
 
